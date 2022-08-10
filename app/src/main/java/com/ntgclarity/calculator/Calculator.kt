@@ -1,26 +1,25 @@
 package com.ntgclarity.calculator
 
+import android.content.Context
+
 class Calculator {
     var operand = 0.0
     var result = 0.0
-    var firstTime:Boolean = true
+    var firstTime: Boolean = true
 
     fun execute(operation: String): Double {
         if (operation == "+") {
             operand = result + operand
-        }
-        else if (operation == "-") {
+        } else if (operation == "-") {
             operand = result - operand
-            if(firstTime)
+            if (firstTime)
                 operand = Math.abs(operand)
-        }
-        else if (operation == "*") {
-            if(firstTime)
+        } else if (operation == "*") {
+            if (firstTime)
                 result = 1.0
             operand = result * operand
-        }
-        else if (operation == "/") {
-            if(!firstTime)
+        } else if (operation == "/") {
+            if (!firstTime)
                 operand = result / operand
         }
         else if (operation == "sqrt") {
@@ -31,5 +30,11 @@ class Calculator {
         result = operand
         firstTime = false
         return operand
+    }
+
+    fun resetCalculator()
+    {
+        this.result = 0.0
+        this.firstTime = true
     }
 }

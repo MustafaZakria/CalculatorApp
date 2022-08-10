@@ -9,7 +9,7 @@ class MainActivity : AppCompatActivity() {
     private var isTypingNumber = true
     private var tvResult: TextView? = null
     private val calculator = Calculator()
-    private var lastOperation:String? = null
+    private var lastOperation:String = "+"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,16 +98,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnClear.setOnClickListener {
-            if (isTypingNumber) {
-                isTypingNumber = false
-            }
-            tvResult?.text = "0.0"
-            calculator.firstTime = true
-            calculator.result = 0.0
+            handleClearOperation()
         }
 
         btnEqual.setOnClickListener {
-            handleOperation(lastOperation!!)
+            handleOperation(lastOperation)
+            resetOperation()
+            calculator.resetCalculator()
         }
 
     }
@@ -132,10 +129,24 @@ class MainActivity : AppCompatActivity() {
 
         calculator.operand = numberOnDisplay
 
-        val result = calculator.execute(operation)
+        val result = calculator.execute(lastOperation)
 
         tvResult?.text = "${result}"
 
         lastOperation = operation
+    }
+
+    fun resetOperation()
+    {
+        lastOperation = "+"
+    }
+
+    fun handleClearOperation(){
+        if (isTypingNumber) {
+            isTypingNumber = false
+        }
+        tvResult?.text = "0.0"
+        calculator.resetCalculator()
+        resetOperation()
     }
 }
